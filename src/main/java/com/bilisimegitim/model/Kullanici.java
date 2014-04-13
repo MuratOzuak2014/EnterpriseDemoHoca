@@ -25,10 +25,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Adem
+ * @author user
  */
 @Entity
-@Table(catalog = "adem", schema = "")
+@Table(catalog = "murat", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Kullanici.findAll", query = "SELECT k FROM Kullanici k"),
@@ -37,8 +37,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Kullanici.findByKullaniciSoyad", query = "SELECT k FROM Kullanici k WHERE k.kullaniciSoyad = :kullaniciSoyad"),
     @NamedQuery(name = "Kullanici.findByCinsiyet", query = "SELECT k FROM Kullanici k WHERE k.cinsiyet = :cinsiyet"),
     @NamedQuery(name = "Kullanici.findByDogumTarihi", query = "SELECT k FROM Kullanici k WHERE k.dogumTarihi = :dogumTarihi"),
-    @NamedQuery(name = "Kullanici.findBySifre", query = "SELECT k FROM Kullanici k WHERE k.sifre = :sifre"),
-    @NamedQuery(name = "Kullanici.findByEmail", query = "SELECT k FROM Kullanici k WHERE k.email = :email")})
+    @NamedQuery(name = "Kullanici.findByTckn", query = "SELECT k FROM Kullanici k WHERE k.tckn = :tckn"),
+    @NamedQuery(name = "Kullanici.findBySifre", query = "SELECT k FROM Kullanici k WHERE k.sifre = :sifre")})
 public class Kullanici implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -68,13 +68,14 @@ public class Kullanici implements Serializable {
     private Date dogumTarihi;
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 11)
+    @Column(nullable = false, length = 11)
+    private String tckn;
+    @Basic(optional = false)
+    @NotNull
     @Size(min = 1, max = 20)
     @Column(nullable = false, length = 20)
     private String sifre;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @Size(max = 50)
-    @Column(length = 50)
-    private String email;
 
     public Kullanici() {
     }
@@ -83,12 +84,13 @@ public class Kullanici implements Serializable {
         this.kullaniciId = kullaniciId;
     }
 
-    public Kullanici(Integer kullaniciId, String kullaniciAd, String kullaniciSoyad, String cinsiyet, Date dogumTarihi, String sifre) {
+    public Kullanici(Integer kullaniciId, String kullaniciAd, String kullaniciSoyad, String cinsiyet, Date dogumTarihi, String tckn, String sifre) {
         this.kullaniciId = kullaniciId;
         this.kullaniciAd = kullaniciAd;
         this.kullaniciSoyad = kullaniciSoyad;
         this.cinsiyet = cinsiyet;
         this.dogumTarihi = dogumTarihi;
+        this.tckn = tckn;
         this.sifre = sifre;
     }
 
@@ -132,20 +134,20 @@ public class Kullanici implements Serializable {
         this.dogumTarihi = dogumTarihi;
     }
 
+    public String getTckn() {
+        return tckn;
+    }
+
+    public void setTckn(String tckn) {
+        this.tckn = tckn;
+    }
+
     public String getSifre() {
         return sifre;
     }
 
     public void setSifre(String sifre) {
         this.sifre = sifre;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     @Override

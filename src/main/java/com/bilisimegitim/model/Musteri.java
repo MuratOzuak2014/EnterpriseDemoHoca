@@ -25,10 +25,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Adem
+ * @author user
  */
 @Entity
-@Table(catalog = "adem", schema = "")
+@Table(catalog = "murat", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Musteri.findAll", query = "SELECT m FROM Musteri m"),
